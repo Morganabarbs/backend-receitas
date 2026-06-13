@@ -1,48 +1,45 @@
 const mongoose = require('mongoose');
 
-const livroSchema = new mongoose.Schema(
+const receitaSchema = new mongoose.Schema(
   {
-    titulo: {
+    nome: {
       type: String,
-      required: [true, 'O título é obrigatório'],
+      required: [true, 'O nome da receita é obrigatório'],
       trim: true,
-      maxlength: [200, 'O título pode ter no máximo 200 caracteres'],
+      maxlength: [200, 'O nome pode ter no máximo 200 caracteres'],
     },
-    autor: {
+    categoria: {
       type: String,
-      required: [true, 'O autor é obrigatório'],
-      trim: true,
-      maxlength: [150, 'O nome do autor pode ter no máximo 150 caracteres'],
-    },
-    genero: {
-      type: String,
-      required: [true, 'O gênero é obrigatório'],
+      required: [true, 'A categoria é obrigatória'],
       trim: true,
       enum: {
         values: [
-          'Ficção',
-          'Não-Ficção',
-          'Romance',
-          'Terror',
-          'Fantasia',
-          'Ficção Científica',
-          'Biografia',
-          'História',
-          'Autoajuda',
-          'Técnico',
-          'Infantil',
+          'Sobremesa',
+          'Prato Principal',
+          'Entrada',
+          'Bebida',
+          'Vegetariano',
+          'Vegano',
           'Outro',
         ],
-        message: '{VALUE} não é um gênero válido',
+        message: '{VALUE} não é uma categoria válida',
       },
     },
-    anoPublicacao: {
-      type: Number,
-      required: [true, 'O ano de publicação é obrigatório'],
-      min: [1000, 'Ano de publicação inválido'],
-      max: [new Date().getFullYear(), 'O ano não pode ser no futuro'],
+    origem: {
+      type: String,
+      trim: true,
+      maxlength: [100, 'A origem pode ter no máximo 100 caracteres'],
     },
-    lido: {
+    ingredientes: {
+      type: [String],
+      required: [true, 'Os ingredientes são obrigatórios'],
+    },
+    instrucoes: {
+      type: String,
+      required: [true, 'As instruções são obrigatórias'],
+      trim: true,
+    },
+    favorito: {
       type: Boolean,
       default: false,
     },
@@ -53,4 +50,4 @@ const livroSchema = new mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model('Livro', livroSchema);
+module.exports = mongoose.model('Receita', receitaSchema);
