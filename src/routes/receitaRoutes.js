@@ -53,3 +53,13 @@ router.get('/categorias', listarCategorias);
 router.get('/categoria/:cat', filtrarPorCategoria);
 
 module.exports = router;
+
+// rota para pratos do dia
+router.get('/pratos-do-dia', async (req, res) => {
+  try {
+    const pratos = await Receita.aggregate([{ $sample: { size: 10 } }]);
+    res.json(pratos);
+  } catch (err) {
+    res.status(500).json({ erro: 'Erro ao buscar pratos do dia' });
+  }
+});
